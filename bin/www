@@ -3,10 +3,13 @@
 /**
  * Module dependencies.
  */
-
+require('dotenv').config()
+const dbconfig = require('../library/dbconfig')
 const app = require('../app');
 const debug = require('debug')('recipe-app:server');
 const http = require('http');
+
+dbconfig.connect()
 
 /**
  * Get port from environment and store in Express.
