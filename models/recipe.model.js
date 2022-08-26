@@ -6,8 +6,7 @@ const recipeSchema = new mongoose.Schema(
         category:{ type:String, required:true },
         ingridients:[{ type:String, required:true }],
         instructions:{ type:String, required:true },
-        rating:[{ type:Number, required:true }],
-        favorite:{ type:Boolean, default:false },
+        rating:[{ type:Number, required:true }]
     },
     {
         timestamps:true
