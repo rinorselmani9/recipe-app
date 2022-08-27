@@ -24,6 +24,15 @@ router.post('/register', inputsMiddleware.register, inputsMiddleware.validate, a
   } catch (err) {
     res.status(400).json(jsonRes(err.message, false))
   }
+}) 
+
+router.post('/forgot-password-request',inputsMiddleware.email, inputsMiddleware.validate , async(req,res) => {
+  try {
+    const result = await authController.forgotPassword(req.body)
+    res.json(jsonRes(result))
+  } catch (err) {
+    res.status(400).json(jsonRes(err.message,false))
+  }
 })
 
 module.exports = router

@@ -27,4 +27,7 @@ module.exports = {
   verifyAccountToken: (req, res, next) => {
     verify(process.env.JWT_VERIFY_ACCOUNT, req, res, next)
   },
+  verifyChangePasswordToken: (req,res,next) => {
+    verify(process.env.JWT_FORGOT_PASSWORD,req,res,next)
+  }
 }

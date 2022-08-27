@@ -10,8 +10,14 @@ module.exports = {
     const result = await userModel.findOne({ email }).exec()
     return result
   },
+
   verifyAccount: async (_id) => {
     const result = await userModel.findByIdAndUpdate(_id, { verified: true }).exec()
+    return result
+  },
+
+  changePassword: async (_id, password) => {
+    const result = await userModel.findByIdAndUpdate(_id, { password }).exec()
     return result
   },
 }

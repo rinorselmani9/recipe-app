@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     age: { type: Number, min: 1 },
     profilePic: { type: String },
+    verified:{type:String,default:'false'},
     role: { type: String, required: true, default: 'USER' },
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipes' }],
   },
