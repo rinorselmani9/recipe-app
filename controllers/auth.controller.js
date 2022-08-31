@@ -7,17 +7,15 @@ module.exports = {
   login: async (params) => {
     const { email, password } = params
 
-    if (!email) {
-      throw Error('Please enter an email!')
-    }
-    if (!password) {
-      throw Error('Please enter a password!')
-    }
-
     const user = await userService.findByEmail(email)
+    console.log(user);
 
     if (!user) {
       throw Error('This email does not exist!')
+    }
+
+    if(!user.verified){
+      throw Error('Please verify your account!')
     }
 
     const matchPassword = await bcrypt.compare(password, user.password)

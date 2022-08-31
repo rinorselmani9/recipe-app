@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const constants = require('../library/constants')
 
 const userSchema = new mongoose.Schema(
   {
@@ -15,14 +16,21 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     age: { type: Number, min: 1 },
     profilePic: { type: String },
-    verified:{type:String,default:'false'},
-    role: { type: String, required: true, default: 'USER' },
+    verified: { type: Boolean, default: false },
+    role: { type: String, enum: Object.values(constants.role), required: true, default: constants.role.USER },
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipes' }],
   },
   {
     timestamps: true,
   }
 )
+
+userSchema.post('save', function (error, doc, next) {
+  if (error.code === 11000) {
+    return next(new Error('This user already exists!'))
+  }
+  next()
+})
 
 const user = mongoose.model('Users', userSchema)
 module.exports = user

@@ -1,4 +1,5 @@
 const userModel = require('../models/user.model')
+const constants = require('../library/constants')
 
 module.exports = {
   insert: async (values) => {
@@ -18,6 +19,10 @@ module.exports = {
 
   changePassword: async (_id, password) => {
     const result = await userModel.findByIdAndUpdate(_id, { password }).exec()
+    return result
+  },
+  getAdmins: async () => {
+    const result = await userModel.findOne({ 'role': constants.role.ADMIN })
     return result
   },
 }
