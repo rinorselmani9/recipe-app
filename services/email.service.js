@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 })
 
 const verifyAccountTemplate = (token) => {
-    const url = `http://mylink/verify?token=${token}`
+    const url = `${process.env.FRONT_URL}/verify?token=${token}`
     return {
         subject: 'Recipe App',
         text: 'Please verify your account by clicking on the link below \n',
@@ -24,7 +24,7 @@ const verifyAccountTemplate = (token) => {
 }
 
 const forgotPasswordTemplate = (token) => {
-    const url =`http://mylink/forgot-password?token=${token}`
+    const url =`${process.env.FRONT_URL}/users/change-password?token=${token}`
 
     return{
         subject:'Recipe App',

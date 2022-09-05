@@ -30,7 +30,7 @@ const validators = {
     if (!errors.length) {
       return next()
     }
-    res.status(500).json(jsonRes(errors[0], false))
+    res.status(500).json(jsonRes(errors, false))
   },
 }
 

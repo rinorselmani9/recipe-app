@@ -6,7 +6,7 @@ const constants = require('../library/constants')
 
 module.exports = {
   add: async (params) => {
-    const { firstName, lastName, email, password, age, profilePic, favorites } = params
+    const { firstName, lastName, email, password, age, image, favorites } = params
 
     const hashedPassword = await bcrypt.hash(password, parseInt(process.env.GEN_SALT))
 
@@ -16,7 +16,7 @@ module.exports = {
       email,
       password: hashedPassword,
       age,
-      profilePic,
+      image,
       favorites,
     })
 
@@ -26,6 +26,10 @@ module.exports = {
     )
     emailService.sendVerificationEmail(email, token)
     return result._id
+  },
+  getUser:async(params) => {
+    const result = await userService.getProfileUser(params)
+    return result
   },
 
   verifyAccount: async (id) => {
@@ -54,4 +58,8 @@ module.exports = {
       userService.insert(admin)
     }
   },
+  deleteAccount: async(id) => {
+    const result = await userService.deleteUser(id)
+    return result
+  }
 }

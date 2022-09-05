@@ -6,7 +6,9 @@ const recipeSchema = new mongoose.Schema(
         category:{ type:String, required:true },
         ingridients:[{ type:String, required:true }],
         instructions:{ type:String, required:true },
-        rating:[{ type:Number, required:true }]
+        rating:[{ type:Number}],
+        image:{type:String},
+        creator:{type: mongoose.Types.ObjectId, required:true, ref:'Users'}
     },
     {
         timestamps:true

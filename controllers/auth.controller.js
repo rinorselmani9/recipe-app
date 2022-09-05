@@ -25,7 +25,12 @@ module.exports = {
     }
 
     const token = jwt.sign({_id:user._id}, process.env.JWT_SECRET)
-    return token
+    return {
+      token,
+      id:user.id,
+      role:user.role,
+      firstName:user.firstName
+    }
   },
   
   forgotPassword: async(params) => {

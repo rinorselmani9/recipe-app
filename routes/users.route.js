@@ -5,9 +5,15 @@ const { verifyAccountToken, verifyChangePasswordToken } = require('../middleware
 const inputsMiddleware = require('../middlewares/inputs.middleware')
 const { jsonRes } = require('../library/helper')
 
+
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource')
+router.get('/:id', async(req, res) => {
+  try{
+    const result = await usersController.getUser(req.params.id)
+    res.json(jsonRes(result))
+  }catch(err){
+    res.status(400).json(jsonRes(err.message,false))
+  }
 })
 
 router.post('/verify', inputsMiddleware.email, verifyAccountToken, async (req, res) => {
@@ -22,6 +28,15 @@ router.post('/verify', inputsMiddleware.email, verifyAccountToken, async (req, r
 router.post('/change-password', verifyChangePasswordToken, inputsMiddleware.password, inputsMiddleware.validate, async(req,res) => {
   try {
     const result = await usersController.changePassword(req.body.password, req.decoded)
+    res.json(jsonRes(result))
+  } catch (err) {
+    res.status(400).json(jsonRes(err.message,false))
+  }
+})
+
+router.delete('/delete/:id',async(req,res) => {
+  try {
+    const result = await usersController.deleteAccount(req.params.id)
     res.json(jsonRes(result))
   } catch (err) {
     res.status(400).json(jsonRes(err.message,false))
