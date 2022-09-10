@@ -55,15 +55,15 @@ router.post('/:id',verifyToken, async(req,res) => {
   }
 })
 
-// router.post('/update-profile-image', upload.single('profile-image') ,async(req,res) => {
-//   try {
-//     console.log(req.file);
-//     const result = await usersController.updateProfilePicture(req.decoded, req.file)
-//     res.json(jsonRes(result))
-//   } catch (err) {
-//     res.json(jsonRes(err.message,false))
-//   }
-// })
+router.post('/update-profile-image/:id', upload.single('profile-image') ,async(req,res) => {
+  try {
+    console.log(req.file);
+    const result = await usersController.updateProfilePicture(req.params.id, req.file)
+    res.json(jsonRes(result))
+  } catch (err) {
+    res.json(jsonRes(err.message,false))
+  }
+})
 
 router.delete('/delete/:id',verifyToken,async(req,res) => {
   try {

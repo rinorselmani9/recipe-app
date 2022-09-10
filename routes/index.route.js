@@ -4,6 +4,8 @@ const authController = require('../controllers/auth.controller')
 const userController = require('../controllers/users.controller')
 const inputsMiddleware = require('../middlewares/inputs.middleware')
 const { jsonRes } = require('../library/helper')
+const upload = require('../services/upload.service')
+const { register, validate } = require('../middlewares/inputs.middleware')
 
 /* GET home page. */
 router.get('/', (req, res) => {})
@@ -17,9 +19,10 @@ router.post('/login', inputsMiddleware.login, inputsMiddleware.validate, async (
   }
 })
 
-router.post('/register', inputsMiddleware.register, inputsMiddleware.validate, async (req, res) => {
+router.post('/register', register, upload.single('profile-image'), async (req, res) => {
   try {
-    const result = await userController.add(req.body)
+    console.log(req.body);
+    const result = await userController.add(req.body, req.file)
     res.json(jsonRes(result))
   } catch (err) {
     res.status(400).json(jsonRes(err.message, false))

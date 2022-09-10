@@ -4,6 +4,8 @@ const userModel = require('../models/user.model')
 module.exports = {
   insert: async (values) => {
     const { title, category, ingridients, instructions, image, creator } = values
+
+    
     const newRecipe = new recipeModel({
       title,
       category,
@@ -12,7 +14,7 @@ module.exports = {
       image,
       creator,
     })
-
+    // console.log(newRecipe);
     let user
     try {
       user = await userModel.findById(creator)

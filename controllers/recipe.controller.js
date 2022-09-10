@@ -2,33 +2,23 @@ const recipeService = require('../services/recipe.service')
 const {jsonRes} = require('../library/helper')
 
 module.exports = {
-  add: async (params) => {
+  add: async (params,file) => {
 
-  const { title, category, ingridients, instructions, image} = params
+  const { title, category, ingridients, instructions,creator} = params
+ let fileName = null
+    if(file){
+      fileName = `/images/${file.filename}`
+    }
 
-    if(!title){
-      throw Error('Title is required!')
-    }
-    if(!category){
-      throw Error('Category is required!')
-    }
-    if(!ingridients){
-      throw Error('At least one ingridient is required!')
-    }
-    if(!instructions){
-      throw Error('Instructions is required!')
-    }
-    if(!image){
-      throw Error('Image is required!')
-    }
+
     const recipe = {
       title,
       category,
       ingridients,
       instructions,
-      image
+      image:fileName,
+      creator
     }
-
     const result = await recipeService.insert(recipe)
     return result
   },
@@ -44,8 +34,8 @@ module.exports = {
     const result = await recipeService.getRecipeId(id)
     return result
   },
-  editRecipe: async(id,data) => {
-    const { title, category, ingridients, instructions, image} = data
+  editRecipe: async(id,data,file) => {
+    const { title, category, ingridients, instructions} = data
 
     if(!title){
       throw Error('Title is required!')
@@ -59,8 +49,9 @@ module.exports = {
     if(!instructions){
       throw Error('Instructions is required!')
     }
-    if(!image){
-      throw Error('Image is required!')
+    let fileName = null
+    if(file){
+      fileName = `/images/${file.filename}`
     }
 
     const recipe = {
@@ -68,7 +59,7 @@ module.exports = {
       category,
       ingridients,
       instructions,
-      image
+      image:fileName
     }
     const result = await recipeService.editRecipeData(id,recipe)
     return result

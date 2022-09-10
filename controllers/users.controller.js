@@ -6,17 +6,22 @@ const constants = require('../library/constants')
 const { jsonRes } = require('../library/helper')
 
 module.exports = {
-  add: async (params) => {
+  add: async (params,file) => {
     const { firstName, lastName, email, password, age } = params
 
     const hashedPassword = await bcrypt.hash(password, parseInt(process.env.GEN_SALT))
 
+    if(file){
+      fileName = `/images/${file.filename}`
+    }
+    
     const result = await userService.insert({
       firstName,
       lastName,
       email,
       password: hashedPassword,
       age,
+      image:fileName
     })
 
     const token = jwt.sign({ _id: result._id, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 },process.env.JWT_VERIFY_ACCOUNT)
