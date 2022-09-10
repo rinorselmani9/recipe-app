@@ -4,11 +4,10 @@ const userModel = require('../models/user.model')
 module.exports = {
   insert: async (values) => {
     const { title, category, ingridients, instructions, image, creator } = values
-    const elements = ingridients.split(',')
     const newRecipe = new recipeModel({
       title,
       category,
-      ingridients: elements,
+      ingridients,
       instructions,
       image,
       creator,
@@ -23,7 +22,6 @@ module.exports = {
     if (!user) {
       return 'No user found with this id'
     }
-    console.log(user)
     try {
       const result = await newRecipe.save()
       user.recipes.push(newRecipe)
@@ -33,7 +31,7 @@ module.exports = {
       return error.message
     }
   },
-  getAllRecipes: async() => {
+  getAllRecipes: async () => {
     const result = await recipeModel.find()
     return result
   },
@@ -46,10 +44,10 @@ module.exports = {
     return result
   },
   editRecipeData: async (id, data) => {
-    const result = await recipeModel.findByIdAndUpdate(id,data)
+    const result = await recipeModel.findByIdAndUpdate(id, data)
     return result
   },
-  deleteOneRecipe: async(id) => {
+  deleteOneRecipe: async (id) => {
     const recipe = await recipeModel.findById(id).populate('creator')
     try {
       await recipeModel.findByIdAndDelete(id)
@@ -58,5 +56,22 @@ module.exports = {
     } catch (err) {
       return err
     }
-  }
+  },
+  adminDeleteRecipeById: async (id) => {
+    const recipe = await recipeModel.findById(id).populate('creator')
+    try {
+      await recipeModel.findByIdAndDelete(id)
+      recipe.creator.recipes.pull(recipe)
+      await recipe.creator.save()
+    } catch (err) {
+      return err
+    }
+  },
+  giveRating:async(id,rate) => {
+    const result = await recipeModel.updateOne({_id:id},{$push:{rating:rate}})
+  },
+  editRecipeImageById: async (id, fileName) => {
+    const result = recipeModel.findByIdAndUpdate(id, { image: fileName })
+    return result
+  },
 }

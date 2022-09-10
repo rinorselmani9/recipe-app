@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema(
     },
     password: { type: String, required: true },
     age: { type: Number, min: 1 },
-    profilePic: { type: String },
     verified: { type: Boolean, default: false },
     image:{type:String},
     role: { type: String, enum: Object.values(constants.role), required: true, default: constants.role.USER },
