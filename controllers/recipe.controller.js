@@ -5,7 +5,7 @@ module.exports = {
   add: async (params,file) => {
 
   const { title, category, ingridients, instructions,creator} = params
- let fileName = null
+   let fileName = null
     if(file){
       fileName = `/images/${file.filename}`
     }
@@ -37,18 +37,6 @@ module.exports = {
   editRecipe: async(id,data,file) => {
     const { title, category, ingridients, instructions} = data
 
-    if(!title){
-      throw Error('Title is required!')
-    }
-    if(!category){
-      throw Error('Category is required!')
-    }
-    if(!ingridients){
-      throw Error('At least one ingridient is required!')
-    }
-    if(!instructions){
-      throw Error('Instructions is required!')
-    }
     let fileName = null
     if(file){
       fileName = `/images/${file.filename}`
