@@ -10,15 +10,19 @@ module.exports = {
       fileName = `/images/${file.filename}`
     }
 
+    let ingridientsArray = ingridients.split(',')
+    ingridientsArray.join('').split('')
+
 
     const recipe = {
       title,
       category,
-      ingridients,
+      ingridients:ingridientsArray,
       instructions,
       image:fileName,
       creator
     }
+    // console.log(recipe.ingridients);
     const result = await recipeService.insert(recipe)
     return result
   },
@@ -37,6 +41,10 @@ module.exports = {
   editRecipe: async(id,data,file) => {
     const { title, category, ingridients, instructions} = data
 
+    let ingridientsArray = ingridients.split(',')
+    
+    let newIngridientArray = ingridientsArray.filter(elem => {return elem !== ''})
+    
     let fileName = null
     if(file){
       fileName = `/images/${file.filename}`
@@ -45,7 +53,7 @@ module.exports = {
     const recipe = {
       title,
       category,
-      ingridients,
+      ingridients:newIngridientArray,
       instructions,
       image:fileName
     }

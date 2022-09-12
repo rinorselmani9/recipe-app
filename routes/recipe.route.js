@@ -21,6 +21,7 @@ router.post('/', verifyToken, upload.single('recipe-image'), async (req, res) =>
   } catch (err) {
     res.status(400).json(jsonRes(err.message, false))
   }
+  // console.log(req.body);
 })
 router.get('/:id', verifyToken, async (req, res) => {
   try {

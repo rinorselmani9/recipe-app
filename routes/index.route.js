@@ -21,7 +21,6 @@ router.post('/login', inputsMiddleware.login, inputsMiddleware.validate, async (
 
 router.post('/register', register, upload.single('profile-image'), async (req, res) => {
   try {
-    console.log(req.body);
     const result = await userController.add(req.body, req.file)
     res.json(jsonRes(result))
   } catch (err) {

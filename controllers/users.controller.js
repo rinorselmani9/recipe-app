@@ -69,25 +69,7 @@ module.exports = {
     return result
   },
   editUser:async(id,data) => {
-    const {firstName,lastName,age} = data
-    
-    if(!firstName){
-      throw Error('First Name cant be empty')
-    }
-    if(!lastName){
-      throw Error('Last Name cant be empty')
-    }
-    if(!age){
-      throw Error('Age cant be empty')
-    }
-
-    const editedUser = {
-      firstName,
-      lastName,
-      age
-    }
-
-    const result = await userService.editUserProfile(id, editedUser)
+    const result = await userService.editUserProfile(id, data)
     return result
   },
   updateProfilePicture:async(userId, file) => {
